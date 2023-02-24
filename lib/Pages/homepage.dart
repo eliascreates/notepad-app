@@ -1,28 +1,35 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../components/note_cell.dart';
+import '../components/note_drawer.dart';
 import '../components/section_header.dart';
 import '../components/top_action_buttons.dart';
+import '../models/note.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void addNote() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[150],
-      // backgroundColor: const Color.fromARGB(255, 77, 69, 93), //rgb(77, 69, 93)
-// Baige
+      
+      drawer: const NoteDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
           child: Column(
             children: [
               const Text(
-                "Notepad",
-                style: TextStyle(fontSize: 30),
+                "NoteSpace",
+                style: TextStyle(
+                    fontSize: 30, color: Color.fromARGB(255, 125, 185, 182)),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -35,17 +42,18 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Note(
-                time: '12:25 pm',
-                description: 'Professional creative design engineer at twitter',
-                title: 'Design Engineer',
+              Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: notes.length,
+                    itemBuilder: ((context, index) {
+                      return NoteWidget(
+                          title: notes[index].title,
+                          description: notes[index].description,
+                          time: notes[index].date);
+                    })),
               ),
-              const SectionHeader(date: "Yesterday"),
-              const Note(
-                time: '9:26 am',
-                description: 'Professional programmer at google',
-                title: 'Software Engineer',
-              ),
+              const SizedBox(height: 40),
             ],
           ),
         ),

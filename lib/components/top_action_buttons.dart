@@ -12,7 +12,7 @@ class TopActionButtons extends StatelessWidget {
         IconButton(
             iconSize: 20,
             onPressed: () {
-              log("Hello");
+              Scaffold.of(context).openDrawer();
             },
             icon: const Icon(Icons.menu)),
         Row(
