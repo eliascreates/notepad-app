@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notepad/components/page_routes.dart';
 
 import '../components/note_cell.dart';
 import '../components/note_drawer.dart';
@@ -19,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       drawer: const NoteDrawer(),
       body: SafeArea(
         child: Padding(
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     TopActionButtons(),
-                    SectionHeader(date: "Today"),
+                    SectionHeader(date: "Hello Mikael"),
                   ],
                 ),
               ),
@@ -47,10 +47,7 @@ class _HomePageState extends State<HomePage> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: notes.length,
                     itemBuilder: ((context, index) {
-                      return NoteWidget(
-                          title: notes[index].title,
-                          description: notes[index].description,
-                          time: notes[index].date);
+                      return NoteWidget(note: notes[index]);
                     })),
               ),
               const SizedBox(height: 40),
@@ -58,10 +55,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(createRoute(null));
+        },
         tooltip: 'Add New Note',
-        child: Icon(
+        child: const Icon(
           Icons.add,
           size: 35,
         ),

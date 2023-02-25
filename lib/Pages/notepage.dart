@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../models/note.dart';
+
 class DetailNote extends StatelessWidget {
-  const DetailNote({super.key});
+  const DetailNote({super.key, required this.note});
+  final Note? note;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,15 @@ class DetailNote extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
+                  color: const Color.fromARGB(255, 255, 255, 240),
+                  borderRadius: BorderRadius.circular(12)),
               child: Column(
-                children: const [
+                children: [
                   TextField(
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 20),
+                      controller: note != null
+                          ? TextEditingController(text: note!.title)
+                          : null,
+                      decoration: const InputDecoration(
                           labelText: 'Title:',
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -42,10 +48,16 @@ class DetailNote extends StatelessWidget {
                               borderSide: BorderSide(
                                   width: 2,
                                   color: Color.fromARGB(255, 105, 165, 162))))),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextField(
+                    textAlign: TextAlign.left,
+                    autocorrect: true,
+                    
+                    controller: note != null
+                        ? TextEditingController(text: note!.description)
+                        : null,
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none, labelText: 'Description:'),
                   ),
                 ],

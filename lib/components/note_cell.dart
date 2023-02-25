@@ -1,17 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:notepad/components/page_routes.dart';
 import '../Pages/notepage.dart';
+import '../models/note.dart';
 
 class NoteWidget extends StatelessWidget {
-  const NoteWidget(
-      {super.key,
-      required this.title,
-      required this.description,
-      required this.time});
-  final String something = '';
-  final String title;
-  final String description;
-  final String time;
+  const NoteWidget({super.key, required this.note});
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class NoteWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           onTap: () {
             log("Something happened");
-            Navigator.of(context).push(_createRoute());
+            Navigator.of(context).push(createRoute(note));
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10),
@@ -40,7 +35,7 @@ class NoteWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    title,
+                    note.title,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -55,7 +50,7 @@ class NoteWidget extends StatelessWidget {
                   SizedBox(
                       width: 260,
                       child: Text(
-                        description,
+                        note.description,
                         style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                         overflow: TextOverflow.ellipsis,
                       )),
@@ -71,7 +66,7 @@ class NoteWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          time,
+                          note.date,
                           style:
                               const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
@@ -92,25 +87,4 @@ class NoteWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const DetailNote(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      final tween =
-          Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      final offsetAnimation = animation.drive(tween);
-
-      return SlideTransition(
-        position: offsetAnimation,
-        child: child,
-      );
-    },
-  );
 }

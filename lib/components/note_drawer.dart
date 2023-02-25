@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/note.dart';
+
 class NoteDrawer extends StatelessWidget {
   const NoteDrawer({super.key});
 
@@ -27,15 +29,23 @@ class NoteDrawer extends StatelessWidget {
               ),
             ]),
           ),
-          const ListTile(
-              leading: Icon(
-                Icons.notes,
-              ),
-              title: Text('All Notes')),
-          const ListTile(leading: Icon(Icons.book), title: Text('Categories')),
-          const ListTile(
-              leading: Icon(Icons.star_border_sharp),
-              title: Text('My favourites')),
+          ListTile(
+            leading: const Icon(
+              Icons.notes,
+            ),
+            title: const Text('All Notes'),
+            trailing: Text('${notes.length + 200}'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.book),
+            title: const Text('Categories'),
+            trailing: Text('${notes.length + 11}'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.star_border_sharp),
+            title: const Text('My favourites'),
+            trailing: Text('${notes.length + 30}'),
+          ),
           const ListTile(
               leading: Icon(Icons.settings), title: Text('Settings')),
         ],
